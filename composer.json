@@ -1,0 +1,29 @@
+{
+    "name": "ampeco/omnipay-kushki",
+    "description": "Omnipay plugin for Kushki",
+    "type": "library",
+    "require": {
+        "omnipay/common": "^3.2",
+        "php": "^8.1",
+        "nyholm/psr7": "^1.0",
+        "symfony/http-client": "^7.1",
+        "php-http/httplug": "^2.4"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ampeco\\OmnipayKushki\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Diana Vracheva",
+            "email": "diana.vracheva@ampeco.global"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}
