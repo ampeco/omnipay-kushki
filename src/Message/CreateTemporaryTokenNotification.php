@@ -6,6 +6,8 @@ use Omnipay\Common\Message\MessageInterface;
 
 class CreateTemporaryTokenNotification implements MessageInterface
 {
+    private const KUSHKI_PAYMENT_METHOD = 'card';
+
     public function __construct(protected array $data)
     {
         info('DATA::::', [$this->data]);
@@ -14,6 +16,13 @@ class CreateTemporaryTokenNotification implements MessageInterface
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function isSuccessful(): bool
+    {
+        return $this->getToken() && $this->getTransactionId()
+            && $this->getKushkiSubscriptionPlan()
+            && $this->getKushkiPaymentMethod() == self::KUSHKI_PAYMENT_METHOD;
     }
 
     public function getToken(): ?string
@@ -26,8 +35,13 @@ class CreateTemporaryTokenNotification implements MessageInterface
         return $this->data['transaction_id'] ?? null;
     }
 
-    public function isSuccessful(): bool
+    private function getKushkiPaymentMethod(): ?string
     {
-        return $this->getToken() && $this->getTransactionId();
+        return $this->data['kushkiPaymentMethod'] ?? null;
+    }
+
+    private function getKushkiSubscriptionPlan(): ?string
+    {
+        return $this->data['kushkiSubscriptionPlan'] ?? null;
     }
 }

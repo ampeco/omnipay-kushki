@@ -17,7 +17,7 @@ class Response extends AbstractResponse
         return $this->code == 201;
     }
 
-    public function getTicketNumber(): ?string
+    public function getTransactionReference(): ?string
     {
         return $this->data['ticketNumber'] ?? null;
     }

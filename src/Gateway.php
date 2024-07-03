@@ -2,6 +2,8 @@
 
 namespace Ampeco\OmnipayKushki;
 
+use Ampeco\OmnipayKushki\Message\AuthorizeRequest;
+use Ampeco\OmnipayKushki\Message\CaptureRequest;
 use Ampeco\OmnipayKushki\Message\CreateCardRequest;
 use Ampeco\OmnipayKushki\Message\CreateTemporaryTokenNotification;
 use Ampeco\OmnipayKushki\Message\DeleteCardRequest;
@@ -11,9 +13,7 @@ use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\RequestInterface;
 
 /**
- * @method \Omnipay\Common\Message\RequestInterface authorize(array $options = array())
  * @method \Omnipay\Common\Message\RequestInterface completeAuthorize(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface capture(array $options = array())
  * @method \Omnipay\Common\Message\RequestInterface completePurchase(array $options = array())
  * @method \Omnipay\Common\Message\RequestInterface refund(array $options = array())
  * @method \Omnipay\Common\Message\RequestInterface fetchTransaction(array $options = [])
@@ -39,6 +39,16 @@ class Gateway extends AbstractGateway
     public function purchase(array $options = array()): RequestInterface
     {
         return $this->createRequest(PurchaseRequest::class, $options);
+    }
+
+    public function authorize(array $options = array()): RequestInterface
+    {
+        return $this->createRequest(AuthorizeRequest::class, $options);
+    }
+
+    public function capture(array $options = array()): RequestInterface
+    {
+        return $this->createRequest(CaptureRequest::class, $options);
     }
 
     public function void(array $options = array()): RequestInterface
