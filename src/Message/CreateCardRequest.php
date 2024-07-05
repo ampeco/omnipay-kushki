@@ -23,16 +23,8 @@ class CreateCardRequest extends AbstractRequest
             'contactDetails' => [
                 'email' => $this->getEmail(),
             ],
-            'amount' => [
-                'subtotalIva' => 0,
-//                'subtotalIva0' => $this->getAmount(), // TODO uncomment
-                'subtotalIva0' => 1000, // TODO remove !!!
-                'iva' => 0,
-                'ice' => 0,
-                'currency' => $this->getCurrency(),
-            ],
+            ...parent::getAmountData(),
             'startDate' => Carbon::now()->format('Y-m-d'),
-            // + metadata - tran_id? TODO
         ];
     }
 

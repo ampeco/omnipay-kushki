@@ -20,7 +20,7 @@ class CreateTemporaryTokenNotification implements MessageInterface
 
     public function isSuccessful(): bool
     {
-        return $this->getToken() && $this->getTransactionId()
+        return $this->getToken() && $this->getTransaction()
             && $this->getKushkiSubscriptionPlan()
             && $this->getKushkiPaymentMethod() == self::KUSHKI_PAYMENT_METHOD;
     }
@@ -30,9 +30,9 @@ class CreateTemporaryTokenNotification implements MessageInterface
         return $this->data['kushkiToken'] ?? null;
     }
 
-    public function getTransactionId(): ?string
+    public function getTransaction(): ?string
     {
-        return $this->data['transaction_id'] ?? null;
+        return $this->data['transaction'] ?? null;
     }
 
     private function getKushkiPaymentMethod(): ?string

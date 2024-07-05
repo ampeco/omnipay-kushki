@@ -6,7 +6,7 @@ class CreateCardResponse extends Response
 {
     public function isSuccessful() : bool
     {
-        return parent::isSuccessful() && isset($this->data['subscriptionId']);
+        return $this->code == 201 && isset($this->data['subscriptionId']);
     }
 
     public function getSubscriptionId(): ?string

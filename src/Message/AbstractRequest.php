@@ -36,16 +36,17 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
         return $this->getTestMode() ? self::API_URL_TEST : self::API_URL_PROD;
     }
 
+    public function getData(): array
+    {
+        return [
+            ...$this->getAmountData(),
+            'fullResponse' => 'v2',
+            'pathParam' => $this->getSubscriptionId(),
+        ];
+    }
+
     public function sendData($data): Response
     {
-        info('INNNN SEND DATAT', [
-            'data' => $data,
-            'method' => $this->getRequestMethod(),
-            'url' => $this->getBaseUrl() . $this->getEndpoint(),
-            'headers' => $this->getHeaders(),
-            'client' => $this->httpClient
-        ]); /////
-
 //        $response = $this->httpClient->request(
 //            $this->getRequestMethod(),
 //            $this->getBaseUrl() . $this->getEndpoint(),
@@ -75,9 +76,20 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
         $response = $this->buildClient()
             ->{strtolower($this->getRequestMethod())}($endpoint, $data);
 
-        info('INNNN SEND responseee', ['data' => $response]); /////
-
         return $this->createResponse($response->json() ?? [], $response->status());
+    }
+
+    protected function getAmountData(): array
+    {
+        return [
+            'amount' => [
+                'subtotalIva' => 0,
+                'subtotalIva0' => floatval($this->getAmount()),
+                'iva' => 0,
+                'ice' => 0,
+                'currency' => $this->getCurrency(),
+            ],
+        ];
     }
 
     private function buildClient(): PendingRequest

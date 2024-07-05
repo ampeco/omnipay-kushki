@@ -39,7 +39,7 @@ trait CommonParameters
         $this->setParameter('subscriptionId', $value);
     }
 
-    public function getSubscriptionId(): string
+    public function getSubscriptionId(): ?string
     {
         return $this->getParameter('subscriptionId');
     }
