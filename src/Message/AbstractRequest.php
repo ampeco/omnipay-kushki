@@ -47,36 +47,23 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
 
     public function sendData($data): Response
     {
-//        $response = $this->httpClient->request(
-//            $this->getRequestMethod(),
-//            $this->getBaseUrl() . $this->getEndpoint(),
-//            $this->getHeaders(),
-//            json_encode($data),
-//        );
-//
-//        info('INNNN SEND responseee', ['data' => $response]); /////
-//        return $this->createResponse(
-//            json_decode($response->getBody()->getContents(), true, flags: JSON_THROW_ON_ERROR),
-//            $response->getStatusCode(),
-//        );
-
-//        working!!!
-//        $client = Http::baseUrl($this->getBaseUrl())
-//            ->timeout(30)
-//            ->asJson()
-//            ->withHeaders($this->getHeaders())
-//        ;
-
         $endpoint = $this->getEndpoint();
         if (isset($data['pathParam'])) {
             $endpoint = sprintf($this->getEndpoint(), $data['pathParam']);
             unset($data['pathParam']);
         }
 
-        $response = $this->buildClient()
-            ->{strtolower($this->getRequestMethod())}($endpoint, $data);
+        $response = $this->httpClient->request(
+            $this->getRequestMethod(),
+            $this->getBaseUrl() . $endpoint,
+            $this->getHeaders(),
+            json_encode($data),
+        );
 
-        return $this->createResponse($response->json() ?? [], $response->status());
+        return $this->createResponse(
+            json_decode($response->getBody()->getContents(), true, flags: JSON_THROW_ON_ERROR),
+            $response->getStatusCode(),
+        );
     }
 
     protected function getAmountData(): array
