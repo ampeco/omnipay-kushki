@@ -13,4 +13,22 @@ class CreateCardResponse extends Response
     {
         return $this->data['subscriptionId'] ?? null;
     }
+
+    public function getDetails(): ?array
+    {
+        return $this->data['details'] ?? null;
+    }
+
+    public function getLastFourDigits(): ?string
+    {
+        if (isset($this->getDetails()['lastFourDigits'])) {
+            return '**** ' . $this->getDetails()['lastFourDigits'];
+        }
+        return null;
+    }
+
+    public function getPaymentBrand(): ?string
+    {
+        return $this->getDetails()['paymentBrand'] ?? null;
+    }
 }

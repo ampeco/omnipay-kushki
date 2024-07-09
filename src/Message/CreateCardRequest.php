@@ -25,6 +25,7 @@ class CreateCardRequest extends AbstractRequest
             ],
             ...parent::getAmountData(),
             'startDate' => Carbon::now()->format('Y-m-d'),
+            'fullResponse' => 'v2',
         ];
     }
 

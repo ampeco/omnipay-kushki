@@ -57,7 +57,7 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
             $this->getRequestMethod(),
             $this->getBaseUrl() . $endpoint,
             $this->getHeaders(),
-            json_encode($data),
+            $this->getRequestMethod() !== 'GET' ? json_encode($data) : '',
         );
 
         return $this->createResponse(
@@ -77,15 +77,6 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
                 'currency' => $this->getCurrency(),
             ],
         ];
-    }
-
-    private function buildClient(): PendingRequest
-    {
-        return Http::baseUrl($this->getBaseUrl())
-            ->timeout(30)
-            ->asJson()
-            ->withHeaders($this->getHeaders())
-        ;
     }
 
     private function getHeaders(): array
