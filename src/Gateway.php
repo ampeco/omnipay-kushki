@@ -68,7 +68,6 @@ class Gateway extends AbstractGateway
 
     public function getCreateCardCurrency(): string
     {
-//        return 'COP'; // TODO UNCOMMENT
-        return 'EUR';
+        return 'COP';
     }
 }
