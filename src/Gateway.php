@@ -66,8 +66,8 @@ class Gateway extends AbstractGateway
         return 0;
     }
 
-    public function getCreateCardCurrency(): string
+    public function getAvailableCurrencies(): array
     {
-        return 'COP';
+        return ['USD', 'COP', 'CLP', 'UF', 'PEN', 'MXN', 'CRC', 'GTQ', 'HNL', 'NIO', 'BRL', 'CLF'];
     }
 }
