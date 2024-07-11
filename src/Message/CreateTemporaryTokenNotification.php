@@ -2,9 +2,9 @@
 
 namespace Ampeco\OmnipayKushki\Message;
 
-use Omnipay\Common\Message\MessageInterface;
+use Omnipay\Common\Message\NotificationInterface;
 
-class CreateTemporaryTokenNotification implements MessageInterface
+class CreateTemporaryTokenNotification implements NotificationInterface
 {
     private const KUSHKI_PAYMENT_METHOD = 'card';
 
@@ -18,11 +18,9 @@ class CreateTemporaryTokenNotification implements MessageInterface
         return $this->data;
     }
 
-    public function isSuccessful(): bool
+    public function getMessage(): array
     {
-        return $this->getToken() && $this->getTransaction()
-            && $this->getKushkiSubscriptionPlan()
-            && $this->getKushkiPaymentMethod() == self::KUSHKI_PAYMENT_METHOD;
+        return $this->data;
     }
 
     public function getToken(): ?string
@@ -30,9 +28,21 @@ class CreateTemporaryTokenNotification implements MessageInterface
         return $this->data['kushkiToken'] ?? null;
     }
 
-    public function getTransaction(): ?string
+    public function getTransactionReference(): ?string
     {
-        return $this->data['transaction'] ?? null;
+        return $this->data['kushkiToken'] ?? null;
+    }
+
+    public function getTransactionStatus(): string
+    {
+        return $this->isSuccessful() ? self::STATUS_COMPLETED : self::STATUS_FAILED;
+    }
+
+    private function isSuccessful(): bool
+    {
+        return $this->getToken() && $this->getTransactionReference()
+            && $this->getKushkiSubscriptionPlan()
+            && $this->getKushkiPaymentMethod() == self::KUSHKI_PAYMENT_METHOD;
     }
 
     private function getKushkiPaymentMethod(): ?string
