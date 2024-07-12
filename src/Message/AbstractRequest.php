@@ -61,7 +61,8 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
         );
 
         return $this->createResponse(
-            json_decode($response->getBody()->getContents(), true, flags: JSON_THROW_ON_ERROR),
+            $this->getRequestMethod() !== 'DELETE' ?
+                json_decode($response->getBody()->getContents(), true, flags: JSON_THROW_ON_ERROR) : [],
             $response->getStatusCode(),
         );
     }
