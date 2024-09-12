@@ -14,12 +14,14 @@ class Response extends AbstractResponse
 
     public function isSuccessful() : bool
     {
-        return $this->code == 201
-            && isset($this->data['ticketNumber'])
-            && isset($this->data['details']['transactionStatus'])
-            && $this->data['details']['transactionStatus'] == static::TRANSACTION_STATUS
-            && isset($this->data['details']['transactionType'])
-            && $this->data['details']['transactionType'] == static::TRANSACTION_TYPE;
+        return isset(
+                $this->data['ticketNumber'],
+                $this->data['details']['transactionStatus'],
+                $this->data['details']['transactionType']
+            )
+            && $this->code === 201
+            && $this->data['details']['transactionStatus'] === static::TRANSACTION_STATUS
+            && $this->data['details']['transactionType'] === static::TRANSACTION_TYPE;
     }
 
     public function getTransactionReference(): ?string

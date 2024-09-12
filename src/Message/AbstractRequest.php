@@ -4,8 +4,6 @@ namespace Ampeco\OmnipayKushki\Message;
 
 use Ampeco\OmnipayKushki\CommonParameters;
 use Ampeco\OmnipayKushki\Gateway;
-use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Support\Facades\Http;
 use Omnipay\Common\Message\AbstractRequest as OmniPayAbstractRequest;
 
 abstract class AbstractRequest extends OmniPayAbstractRequest
@@ -72,7 +70,7 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
         return [
             'amount' => [
                 'subtotalIva' => 0,
-                'subtotalIva0' => floatval($this->getAmount()),
+                'subtotalIva0' => (float) $this->getAmount(),
                 'iva' => 0,
                 'ice' => 0,
                 'currency' => $this->getCurrency(),
@@ -82,8 +80,16 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
 
     private function getHeaders(): array
     {
-        return [
-            'Private-Merchant-Id' => $this->getPrivateMerchantId(),
-        ];
+        $headers = [];
+        
+        if ($this->getPrivateMerchantId()) {
+            $headers['Private-Merchant-Id'] = $this->getPrivateMerchantId();
+        }
+        
+        if ($this->getPublicMerchantId()) {
+            $headers['Public-Merchant-Id'] = $this->getPublicMerchantId();
+        }
+        
+        return $headers;
     }
 }

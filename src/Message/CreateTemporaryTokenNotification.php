@@ -10,7 +10,6 @@ class CreateTemporaryTokenNotification implements NotificationInterface
 
     public function __construct(protected array $data)
     {
-        info('DATA::::', [$this->data]);
     }
 
     public function getData(): array
@@ -42,7 +41,7 @@ class CreateTemporaryTokenNotification implements NotificationInterface
     {
         return $this->getToken() && $this->getTransactionReference()
             && $this->getKushkiSubscriptionPlan()
-            && $this->getKushkiPaymentMethod() == self::KUSHKI_PAYMENT_METHOD;
+            && $this->getKushkiPaymentMethod() === self::KUSHKI_PAYMENT_METHOD;
     }
 
     private function getKushkiPaymentMethod(): ?string

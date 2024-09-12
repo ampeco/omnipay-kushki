@@ -2,10 +2,10 @@
 
 namespace Ampeco\OmnipayKushki\Message;
 
-class DeleteCardResponse extends Response
+class GetBankListResponse extends Response
 {
     public function isSuccessful() : bool
     {
-        return $this->code === 204;
+        return $this->code === 200;
     }
 }

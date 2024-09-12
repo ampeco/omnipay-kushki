@@ -2,8 +2,6 @@
 
 namespace Ampeco\OmnipayKushki\Message;
 
-use Carbon\Carbon;
-
 class CreateCardRequest extends AbstractRequest
 {
     private const PLAN_NAME = 'Premium';
@@ -23,8 +21,8 @@ class CreateCardRequest extends AbstractRequest
             'contactDetails' => [
                 'email' => $this->getEmail(),
             ],
-            ...parent::getAmountData(),
-            'startDate' => Carbon::now()->format('Y-m-d'),
+            ...$this->getAmountData(),
+            'startDate' => date('Y-m-d'),
             'fullResponse' => 'v2',
         ];
     }

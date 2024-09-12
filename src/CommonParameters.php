@@ -29,9 +29,19 @@ trait CommonParameters
         $this->setParameter('privateMerchantId', $value);
     }
 
-    public function getPrivateMerchantId(): string
+    public function getPrivateMerchantId(): ?string
     {
         return $this->getParameter('privateMerchantId');
+    }
+
+    public function setPublicMerchantId($value): void
+    {
+        $this->setParameter('publicMerchantId', $value);
+    }
+
+    public function getPublicMerchantId(): ?string
+    {
+        return $this->getParameter('publicMerchantId');
     }
 
     public function setSubscriptionId($value): void
@@ -52,5 +62,25 @@ trait CommonParameters
     public function getTicketNumber(): string
     {
         return $this->getParameter('ticketNumber');
+    }
+
+    public function setBankId(string $bankId): void
+    {
+        $this->setParameter('bankId', $bankId);
+    }
+
+    public function getBankId(): string
+    {
+        return $this->getParameter('bankId');
+    }
+    
+    public function setDocumentNumber(string $documentNumber): void
+    {
+        $this->setParameter('documentNumber', $documentNumber);
+    }
+
+    public function getDocumentNumber(): string
+    {
+        return $this->getParameter('documentNumber');
     }
 }

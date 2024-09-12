@@ -3,21 +3,24 @@
 namespace Ampeco\OmnipayKushki;
 
 use Ampeco\OmnipayKushki\Message\AuthorizeRequest;
+use Ampeco\OmnipayKushki\Message\BankTransferInitRequest;
+use Ampeco\OmnipayKushki\Message\BankTransferTokenRequest;
 use Ampeco\OmnipayKushki\Message\CaptureRequest;
 use Ampeco\OmnipayKushki\Message\CreateCardRequest;
 use Ampeco\OmnipayKushki\Message\CreateTemporaryTokenNotification;
 use Ampeco\OmnipayKushki\Message\DeleteCardRequest;
+use Ampeco\OmnipayKushki\Message\GetBankListRequest;
 use Ampeco\OmnipayKushki\Message\PurchaseRequest;
 use Ampeco\OmnipayKushki\Message\VoidRequest;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\RequestInterface;
 
 /**
- * @method \Omnipay\Common\Message\RequestInterface completeAuthorize(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface completePurchase(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface refund(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface fetchTransaction(array $options = [])
- * @method \Omnipay\Common\Message\RequestInterface updateCard(array $options = array())
+ * @method RequestInterface completeAuthorize(array $options = array())
+ * @method RequestInterface completePurchase(array $options = array())
+ * @method RequestInterface refund(array $options = array())
+ * @method RequestInterface fetchTransaction(array $options = [])
+ * @method RequestInterface updateCard(array $options = array())
  */
 class Gateway extends AbstractGateway
 {
@@ -59,6 +62,21 @@ class Gateway extends AbstractGateway
     public function deleteCard(array $options = array()): RequestInterface
     {
         return $this->createRequest(DeleteCardRequest::class, $options);
+    }
+
+    public function getBankList(array $options = array()): RequestInterface
+    {
+        return $this->createRequest(GetBankListRequest::class, $options);
+    }
+
+    public function requestBankTransferToken(array $options = array()): RequestInterface
+    {
+        return $this->createRequest(BankTransferTokenRequest::class, $options);
+    }
+
+    public function initBankTransfer(array $options = array()): RequestInterface
+    {
+        return $this->createRequest(BankTransferInitRequest::class, $options);
     }
 
     public function getCreateCardAmount(): float
